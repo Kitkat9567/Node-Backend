@@ -1,25 +1,22 @@
-const { MongoClient } = require('mongodb');
+const  mongoose = require('mongoose');
 
 let db = null;
 
 async function connectDB() {
   try {
-    const client = new MongoClient(process.env.MONGODB_URI);
-    await client.connect();
-    db = client.db();
-    console.log('Connected to MongoDB');
-    return db;
+     await mongoose.connect(process.env.MONGODB_URI);
+    console.log('Connected to mongoose');
   } catch (error) {
-    console.error('MongoDB connection error:', error);
+    console.error('mongoose connection error:', error);
     process.exit(1);
   }
 }
 
-function getDB() {
-  if (!db) {
-    throw new Error('Database not initialized');
-  }
-  return db;
-}
+// function getDB() {
+//   if (!db) {
+//     throw new Error('Database not initialized');
+//   }
+//   return db;
+// }
 
-module.exports = { connectDB, getDB };
+module.exports = { connectDB };

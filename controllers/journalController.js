@@ -36,11 +36,41 @@ const getJournalById = async (req, res, next) => {
 };
 
 const deleteJournalById = async (req, res, next) => {
-    try{
+  try {
+    const { id } = req.params;
+    const result = journalRepository.deleteJournalById(id);
 
-    }catch(error){
-        
-    }
-}
+    return res.status(200).json({ message: "Deleted", data: result });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
 
-module.exports = { createJournal, getJournal, getJournalById };
+const getJournalsById = async (req, res, next) => {
+  try {
+    const id = req.body;
+    const result = await journalRepository.findJournalsbyId(id);
+    return res.status(200).json({ message: "Searched Journal", data: result });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+const updateJournalTitle = async (req, res, next) => {
+  try {
+    const payload = req.body;
+    const result = await journalRepository.updateTitlebyId(payload);
+    return res.status(200).json({ message: "updated", data: result });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+module.exports = {
+  createJournal,
+  getJournal,
+  getJournalById,
+  deleteJournalById,
+  getJournalsById,
+  updateJournalTitle
+};
